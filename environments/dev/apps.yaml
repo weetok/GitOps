@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-web
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/weetok/GitOps.git
+    targetRevision: main
+    path: apps/web/nginx
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: web
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [ "CreateNamespace=true" ]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-obsidian
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/weetok/GitOps.git
+    targetRevision: main
+    path: apps/obsidian/quartz
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: obsidian
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [ "CreateNamespace=true" ]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-automation
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/weetok/GitOps.git
+    targetRevision: main
+    path: apps/automation/n8n
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: automation
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [ "CreateNamespace=true" ]
