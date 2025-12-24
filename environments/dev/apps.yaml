@@ -19,7 +19,25 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apps-obsidian
+  name: apps-couchdb
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/weetok/GitOps.git
+    targetRevision: main
+    path: apps/obsidian/couchdb
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: obsidian
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [ "CreateNamespace=true" ]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-quartz
   namespace: argocd
 spec:
   project: apps
