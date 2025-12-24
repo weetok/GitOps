@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quartz
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: quartz }
+  template:
+    metadata:
+      labels: { app: quartz }
+    spec:
+      containers:
+        - name: quartz
+          image: ghcr.io/weetok/quartz:main
+          ports: [{ containerPort: 8080 }]

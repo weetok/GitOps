@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: quartz
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  tls:
+    - hosts: ["notes.172.30.1.115.nip.io"]
+      secretName: wildcard-dev-tls
+  rules:
+    - host: notes.172.30.1.115.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: quartz
+                port:
+                  number: 80
