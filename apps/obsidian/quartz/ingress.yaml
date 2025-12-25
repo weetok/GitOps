@@ -6,10 +6,10 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   tls:
-    - hosts: ["notes.172.30.1.115.nip.io"]
-      secretName: wildcard-dev-tls
+    - hosts: ["notes.davidbor.eu"]
+      secretName: cloudflare-origin-tls
   rules:
-    - host: notes.172.30.1.115.nip.io
+    - host: davidbor.eu
       http:
         paths:
           - path: /

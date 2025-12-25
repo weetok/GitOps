@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+  namespace: cloudflare
+data:
+  config.yaml: |
+    tunnel: 3d02d4c9-5317-43f0-ab3e-e3c3c321c560
+    credentials-file: /etc/cloudflared/creds/credentials.json
+
+    ingress:
+      - hostname: davidbor.eu
+        service: https://traefik.kube-system.svc.cluster.local:443
+        originRequest:
+          noTLSVerify: false
+
+      - hostname: couchdb.davidbor.eu
+        service: https://traefik.kube-system.svc.cluster.local:443
+        originRequest:
+          noTLSVerify: false
+
+      - service: http_status:404

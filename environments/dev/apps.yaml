@@ -73,6 +73,23 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: platform-cloudflare-origin-ca
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/weetok/GitOps.git
+    targetRevision: main
+    path: apps/platform/cloudflare-origin-ca
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: gitea
   namespace: argocd
 spec:
@@ -106,3 +123,22 @@ spec:
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions: ["CreateNamespace=true"]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-cloudflared
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/weetok/GitOps.git
+    targetRevision: main
+    path: apps/platform/cloudflared
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cloudflare
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: ["CreateNamespace=true"]
+
